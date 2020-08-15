@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.zhengjie.repository.SysExcepFrontLogMapper">
+    <resultMap id="BaseResultMap" type="me.zhengjie.domain.SysExcepFrontLog">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="excep_file" jdbcType="VARCHAR" property="excepFile"/>
+        <result column="excep_content" jdbcType="VARCHAR" property="excepContent"/>
+        <result column="exep_line" jdbcType="INTEGER" property="exepLine"/>
+        <result column="exep_column" jdbcType="INTEGER" property="exepColumn"/>
+        <result column="exep_time" jdbcType="TIMESTAMP" property="exepTime"/>
+        <result column="exep_msg" jdbcType="VARCHAR" property="exepMsg"/>
+        <result column="exep_stack" jdbcType="VARCHAR" property="exepStack"/>
+        <result column="exep_url" jdbcType="VARCHAR" property="exepUrl"/>
+        <result column="exep_user_agent" jdbcType="VARCHAR" property="exepUserAgent"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, excep_file, excep_content, exep_line, exep_column, exep_time, exep_msg, exep_stack, 
+    exep_url, exep_user_agent, username, create_time, update_time
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_excep_front_log
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_excep_front_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="me.zhengjie.domain.SysExcepFrontLog">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into sys_excep_front_log (excep_file, excep_content, exep_line,
+        exep_column, exep_time, exep_msg,
+        exep_stack, exep_url, exep_user_agent,
+        username, create_time, update_time
+        )
+        values (#{excepFile,jdbcType=VARCHAR}, #{excepContent,jdbcType=VARCHAR}, #{exepLine,jdbcType=INTEGER},
+        #{exepColumn,jdbcType=INTEGER}, #{exepTime,jdbcType=TIMESTAMP}, #{exepMsg,jdbcType=VARCHAR},
+        #{exepStack,jdbcType=VARCHAR}, #{exepUrl,jdbcType=VARCHAR}, #{exepUserAgent,jdbcType=VARCHAR},
+        #{username,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+
+    <insert id="save" parameterType="me.zhengjie.domain.SysExcepFrontLog" useGeneratedKeys="true" keyProperty="id"
+            keyColumn="id">
+    insert into sys_excep_front_log (excep_file, excep_content, exep_line,
+    exep_column, exep_time, exep_msg,
+    exep_stack, exep_url, exep_user_agent,
+    username, create_time, update_time
+    )
+    values (#{excepFile,jdbcType=VARCHAR}, #{excepContent,jdbcType=VARCHAR}, #{exepLine,jdbcType=INTEGER},
+    #{exepColumn,jdbcType=INTEGER}, #{exepTime,jdbcType=TIMESTAMP}, #{exepMsg,jdbcType=VARCHAR},
+    #{exepStack,jdbcType=VARCHAR}, #{exepUrl,jdbcType=VARCHAR}, #{exepUserAgent,jdbcType=VARCHAR},
+    #{username,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+    )
+  </insert>
+
+    <insert id="insertSelective" parameterType="me.zhengjie.domain.SysExcepFrontLog">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into sys_excep_front_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="excepFile != null">
+                excep_file,
+            </if>
+            <if test="excepContent != null">
+                excep_content,
+            </if>
+            <if test="exepLine != null">
+                exep_line,
+            </if>
+            <if test="exepColumn != null">
+                exep_column,
+            </if>
+            <if test="exepTime != null">
+                exep_time,
+            </if>
+            <if test="exepMsg != null">
+                exep_msg,
+            </if>
+            <if test="exepStack != null">
+                exep_stack,
+            </if>
+            <if test="exepUrl != null">
+                exep_url,
+            </if>
+            <if test="exepUserAgent != null">
+                exep_user_agent,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="excepFile != null">
+                #{excepFile,jdbcType=VARCHAR},
+            </if>
+            <if test="excepContent != null">
+                #{excepContent,jdbcType=VARCHAR},
+            </if>
+            <if test="exepLine != null">
+                #{exepLine,jdbcType=INTEGER},
+            </if>
+            <if test="exepColumn != null">
+                #{exepColumn,jdbcType=INTEGER},
+            </if>
+            <if test="exepTime != null">
+                #{exepTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="exepMsg != null">
+                #{exepMsg,jdbcType=VARCHAR},
+            </if>
+            <if test="exepStack != null">
+                #{exepStack,jdbcType=VARCHAR},
+            </if>
+            <if test="exepUrl != null">
+                #{exepUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="exepUserAgent != null">
+                #{exepUserAgent,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="me.zhengjie.domain.SysExcepFrontLog">
+    update sys_excep_front_log
+    set excep_file = #{excepFile,jdbcType=VARCHAR},
+      excep_content = #{excepContent,jdbcType=VARCHAR},
+      exep_line = #{exepLine,jdbcType=INTEGER},
+      exep_column = #{exepColumn,jdbcType=INTEGER},
+      exep_time = #{exepTime,jdbcType=TIMESTAMP},
+      exep_msg = #{exepMsg,jdbcType=VARCHAR},
+      exep_stack = #{exepStack,jdbcType=VARCHAR},
+      exep_url = #{exepUrl,jdbcType=VARCHAR},
+      exep_user_agent = #{exepUserAgent,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
